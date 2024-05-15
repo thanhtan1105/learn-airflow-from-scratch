@@ -1,0 +1,7 @@
+# config.dev.yml
+token:
+  coingecko:
+    endpoints:
+      base: https://api.coingecko.com/api/v3/
+      token_price: simple/price/
+  list_url: https://raw.githubusercontent.com/DackieSwap/dackieswap-tokens/main/op_tokens.json

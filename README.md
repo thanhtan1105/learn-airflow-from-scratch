@@ -55,7 +55,7 @@ VERSION
 
 ```bash
 git clone https://github.com/aws/aws-mwaa-local-runner.git
-cd aws-mwaa-local-runner
+cd learn-airflow-from-scratch
 ```
 
 ### Step one: Building the Docker image
