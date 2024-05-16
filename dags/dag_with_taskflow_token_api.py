@@ -9,7 +9,7 @@ default_args = {
     'owner': 'tanle'
 }
 
-@dag(default_args=default_args, schedule_interval="@daily", start_date=days_ago(2), tags=['example'])
+@dag(default_args=default_args, schedule_interval="@daily", start_date=days_ago(2), tags=['learn'])
 def dag_with_taskflow_token_api():
     coingecko = Coingecko()
 
