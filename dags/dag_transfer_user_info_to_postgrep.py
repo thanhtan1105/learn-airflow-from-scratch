@@ -30,7 +30,7 @@ def dag_transfer_user_info_to_postgrep():
         output = []
         fake = Faker()
         for _ in range(1000):
-            data_structure['customerid'] = fake.uuid4()
+            data_structure['customerid'] = random.randint(1, 10)
             data_structure['firstname'] = fake.first_name()
             data_structure['lastname'] = fake.last_name()
             data_structure['email'] = fake.email()
@@ -89,6 +89,32 @@ def dag_transfer_user_info_to_postgrep():
 
     @task
     def load_to_postgres(data):
+        for row in data['customer']:
+            PostgresOperator(
+                task_id='insert_customer',
+                postgres_conn_id='postgres_bank_db',
+                sql=f"""INSERT INTO public.customers (firstname, lastname, email)
+                    VALUES ('{row['firstname']}', '{row['lastname']}', '{row['email']}')
+                    ON CONFLICT ("email") DO NOTHING;
+                """
+            ).execute(context=None)
+
+        # account entity
+        # for row in data['account']:
+        #     PostgresOperator(
+        #         task_id='insert_account',
+        #         postgres_conn_id='postgres_bank_db',
+        #         sql=f"INSERT INTO account (customerid, balance, account_type) VALUES ('{row['customerid']}', {row['balance']}, '{row['account_type']}')"
+        #     ).execute(context=None)
+        #
+        # # transaction entity
+        # for row in data['transaction']:
+        #     PostgresOperator(
+        #         task_id='insert_transaction',
+        #         postgres_conn_id='postgres_bank_db',
+        #         sql=f"INSERT INTO transaction (transaction_id, customerid, amount, transaction_type, transaction_date) VALUES ('{row['transaction_id']}', '{row['customerid']}', {row['amount']}, '{row['transaction_type']}', '{row['transaction_date']}')"
+        #     ).execute(context=None)
+
         print(data)
         pass
 

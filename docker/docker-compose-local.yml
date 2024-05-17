@@ -14,6 +14,9 @@ services:
                 max-file: "3"
         volumes:
             - "${PWD}/db-data:/var/lib/postgresql/data"
+        networks:
+            - mwaa-local-network
+
 
     local-runner:
         image: amazon/mwaa-local:2_8
@@ -42,3 +45,9 @@ services:
             retries: 3
         env_file:
             - ./config/.env.localrunner
+
+        networks:
+            - mwaa-local-network
+
+networks:
+    mwaa-local-network:
